@@ -16,7 +16,7 @@ public class InvoiceServiceTest {
     public void givenDistanceAndTime_ShouldReturnTotalFare() {
         double distance = 2.0;
         int time = 5;
-        double fare = invoiceGenerator.calculateFare(distance, time);
+        double fare = invoiceGenerator.calculateFare(distance, time, "normal");
         double diff = Math.abs(25 - fare);
         Assertions.assertEquals(25.0, fare, diff);
     }
@@ -25,7 +25,7 @@ public class InvoiceServiceTest {
     public void givenLessDistaneOrTime_ShouldReturnMinFare() {
         double distance = 0.1;
         int time = 1;
-        double fare = invoiceGenerator.calculateFare(distance, time);
+        double fare = invoiceGenerator.calculateFare(distance, time, "normal");
         double diff = Math.abs(5 - fare);
         Assertions.assertEquals(5, fare, diff);
     }
@@ -36,7 +36,7 @@ public class InvoiceServiceTest {
                 new Ride(2.0, 5),
                 new Ride(0.1, 1)
         };
-        InvoiceSummary actualInvoiceSummary = invoiceGenerator.calculateFare(rides, 5);
+        InvoiceSummary actualInvoiceSummary = invoiceGenerator.calculateFare(rides, 5, "normal");
         InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 30.0);
         Assertions.assertEquals(expectedInvoiceSummary, actualInvoiceSummary);
     }
@@ -47,12 +47,12 @@ public class InvoiceServiceTest {
         Ride[] rides1 = {new Ride(2.0, 5),
                 new Ride(0.1, 1)
         };
-        InvoiceSummary summary = invoiceGenerator.calculateFare(rides1, 5);
+        InvoiceSummary summary = invoiceGenerator.calculateFare(rides1, 5, "normal");
         expectedSummery.add(summary);
         Ride[] rides2 = {new Ride(2.0, 5),
                 new Ride(0.3, 1)
         };
-        summary = invoiceGenerator.calculateFare(rides2, 5);
+        summary = invoiceGenerator.calculateFare(rides2, 5, "premium");
         expectedSummery.add(summary);
         Assertions.assertEquals(expectedSummery, RideRepository.getUserRideList(5));
     }
